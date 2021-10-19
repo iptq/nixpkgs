@@ -7910,6 +7910,12 @@
     githubId = 9636071;
     name = "Myrl Hex";
   };
+  mzhang = {
+    email = "mail@mzhang.io";
+    github = "iptq";
+    githubId = 1700346;
+    name = "Michael Zhang";
+  };
   nadrieril = {
     email = "nadrieril@gmail.com";
     github = "nadrieril";
