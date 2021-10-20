@@ -22427,6 +22427,7 @@ with pkgs;
     ubootBananaPim64
     ubootAmx335xEVM
     ubootClearfog
+    ubootCubieboard2
     ubootGuruplug
     ubootJetsonTK1
     ubootNanoPCT4
