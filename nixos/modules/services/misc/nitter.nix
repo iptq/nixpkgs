@@ -49,6 +49,13 @@ in
     services.nitter = {
       enable = mkEnableOption "If enabled, start Nitter.";
 
+      package = mkOption {
+        type = types.package;
+        default = pkgs.nitter;
+        defaultText = "pkgs.nitter";
+        description = "The Nix package to use for Nitter.";
+      };
+
       server = {
         address = mkOption {
           type =  types.str;
@@ -78,7 +85,7 @@ in
 
         staticDir = mkOption {
           type = types.path;
-          default = "${pkgs.nitter}/share/nitter/public";
+          default = "${cfg.package}/share/nitter/public";
           defaultText = literalExpression ''"''${pkgs.nitter}/share/nitter/public"'';
           description = "Path to the static files directory.";
         };
@@ -306,8 +313,8 @@ in
           Environment = [ "NITTER_CONF_FILE=/var/lib/nitter/nitter.conf" ];
           # Some parts of Nitter expect `public` folder in working directory,
           # see https://github.com/zedeus/nitter/issues/414
-          WorkingDirectory = "${pkgs.nitter}/share/nitter";
-          ExecStart = "${pkgs.nitter}/bin/nitter";
+          WorkingDirectory = "${cfg.package}/share/nitter";
+          ExecStart = "${cfg.package}/bin/nitter";
           ExecStartPre = "${preStart}";
           AmbientCapabilities = lib.mkIf (cfg.server.port < 1024) [ "CAP_NET_BIND_SERVICE" ];
           Restart = "on-failure";
