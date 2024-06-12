@@ -15,7 +15,7 @@
         inherit system;
       });
     in
-    {
+    rec {
       lib = lib.extend (final: prev: {
 
         nixos = import ./nixos/lib { lib = final; };
@@ -90,6 +90,13 @@
           lib = prev.lib.extend libVersionInfoOverlay;
         })
       );
+
+      packages = forAllSystems (system:
+      let pkgs = import ./. { inherit system; }; in
+      rec {
+        agdaNoGhc = pkgs.haskellPackages.Agda.override (p: { noBundleGhc = true; });
+        agdaPackagesNoGhc = pkgs.adgaPackages.mkAgdaPackages agdaNoGhc;
+      });
 
       nixosModules = {
         notDetected = ./nixos/modules/installer/scan/not-detected.nix;

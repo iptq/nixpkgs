@@ -35,5 +35,7 @@ let
     agdarsec = callPackage ../development/libraries/agda/agdarsec { };
 
     _1lab = callPackage ../development/libraries/agda/1lab { };
+
+    inherit mkAgdaPackages;
   };
 in mkAgdaPackages Agda

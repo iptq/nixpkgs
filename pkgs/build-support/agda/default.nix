@@ -42,13 +42,15 @@ let
     };
     # Agda is a split package with multiple outputs; do not inherit them here.
     meta = removeAttrs Agda.meta [ "outputsToInstall" ];
-  } ''
+  } (''
     mkdir -p $out/bin
     makeWrapper ${Agda.bin}/bin/agda $out/bin/agda \
-      --add-flags "--with-compiler=${ghc}/bin/ghc" \
-      --add-flags "--library-file=${library-file}"
+    ''
+    + (lib.optionalString (!Agda.meta.otherFlags.noBundleGhc) ''--add-flags "--with-compiler=${ghc}/bin/ghc" \
+      '')
+    + ''--add-flags "--library-file=${library-file}"
     ln -s ${Agda.bin}/bin/agda-mode $out/bin/agda-mode
-    '';
+    '');
 
   withPackages = arg: if isAttrs arg then withPackages' arg else withPackages' { pkgs = arg; };
 

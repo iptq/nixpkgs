@@ -1130,6 +1130,9 @@ self: super: builtins.intersectAttrs super {
     (enableCabalFlag "debug")
     # Split outputs to reduce closure size
     enableSeparateBinOutput
+    (overrideCabal (drv: {
+
+    }))
   ];
 
   # ats-format uses cli-setup in Setup.hs which is quite happy to write

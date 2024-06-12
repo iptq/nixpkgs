@@ -147,7 +147,8 @@ in
   # that are known to provide pkg-config modules, as indicated by the presence
   # of `meta.pkgConfigModules`. This option defaults to false for now, since
   # this metadata is far from complete in nixpkgs.
-  __onlyPropagateKnownPkgConfigModules ? false
+  __onlyPropagateKnownPkgConfigModules ? false,
+  otherFlags ? {},
 } @ args:
 
 assert editedCabalFile != null -> revision != null;
@@ -827,7 +828,8 @@ stdenv.mkDerivation ({
 
   };
 
-  meta = { inherit homepage license platforms; }
+
+  meta = { inherit homepage license platforms otherFlags; }
          // optionalAttrs (args ? broken)         { inherit broken; }
          // optionalAttrs (args ? description)    { inherit description; }
          // optionalAttrs (args ? maintainers)    { inherit maintainers; }
